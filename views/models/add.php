@@ -1,0 +1,102 @@
+<?php require_once("../../controllers/login/authorise_admin.php"); ?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Jonker Sailplanes Portal - Create new Plane Model</title>
+  <!--Favicon-->
+  <link rel="shortcut icon" href="../../css/img/jonkerfav.ico" type="image/x-icon">
+  <link href="../../css/sb-admin.css" rel="stylesheet">
+  <link href="../../css/styles.css" rel="stylesheet">
+  <link href="../../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="../../../bootstrap/css/bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="../../../css/sb-admin.css"/>
+</head>
+<body id="page-top">
+  <?php include  "../../templates/header.php"; ?>
+<div id="wrapper">
+    <?php include  "../../templates/sidebar.php"; ?>
+    <div id="content-wrapper">
+      <div class="container-fluid" style="width : 100%">
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="http://portal.jonkersailplanes.co.za/">Dashboard</a>
+          </li>
+          <li class="breadcrumb-item active">Add Model</li>
+        </ol>
+        <!-- Page Content -->
+        <div class="card card-report mx-auto">
+          <div class="card-body">
+            <form action="../../controllers/models/insert.php" method="POST">
+              <div class="form-group row">
+                <label for="model_number" class="col-sm-4 col-form-label">Model Number</label>
+                <div class="col-sm-8">
+                  <input type="text" class="form-control" id="model_number" name="model_number" placeholder="Model Number">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="model_status" class="col-sm-4 col-form-label">Active</label>
+                <div class="col-sm-2">
+                  <input type="checkbox" id="model_status" name="model_status" value="active">
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary mb-2">Save</button>
+              <button type="button" class="btn btn-primary mb-2" onclick="viewModels()">View All</button>
+            </form>
+          </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+  </div>
+  <!-- /.content-wrapper -->
+</div>
+<!-- /#wrapper -->
+<footer class="sticky-footer">
+  <?php include  "../../templates/footer.php";?>
+</footer>
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="logoutModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" href="../../controllers/login/logout.php" >Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../js/jquery-3.4.1.min.js"></script>
+  <script src="../../js/jquery.dataTables.min.js"></script>
+  <script src="../../bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
+</body>
+<script>
+  function back(){
+    window.history.back();
+  }
+
+  function viewModels(){
+    window.location = "view_all.php";
+  }
+</script>
+</html>

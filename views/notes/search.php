@@ -1,0 +1,136 @@
+<?php require_once('../../controllers/login/authorise_admin.php'); ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Jonker Sailplanes Portal - Search Technical Notes</title>
+
+  <link rel="shortcut icon" href="../../css/img/jonkerfav.ico" type="image/x-icon">
+  <link href="/css/sb-admin.css" rel="stylesheet">
+  <link href="/css/styles.css" rel="stylesheet">
+  <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+</head>
+<body id="page-top">
+<?php include  "../templates/header.php"; ?>
+<div id="wrapper">
+  <!-- Sidebar -->
+  <?php include  "../../templates/sidebar.php"; ?>
+  <div id="content-wrapper">
+    <div class="container-fluid">
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="http://portal.jonkersailplanes.co.za/">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Search for a technical note</li>
+      </ol>
+      <!-- Page Content -->
+      <div class="card card-report mx-auto">
+        <div class="card-body">
+          <form>
+              <div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="md-form mb-0">
+                      <input type="text" id="note_number" name="note_number" class="form-control">
+                      <label for="note_number" class="">Note Number</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="md-form mb-0">
+                      <button class="btn btn-primary" type="button" onclick="searchNote()">Search Technical Notes</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <table class="table table-bordered" id="showNotesTable">
+                  <tr>
+                    <thead>
+                      <th>Note Number</th>
+                      <th>Note Title</th>
+                      <th></th>
+                    </thead>
+                  </tr>
+                  <tbody>
+                  </tbody>
+                </table>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /#wrapper -->
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="logoutModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" href="../../controllers/login/logout.php" >Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="/css/sb-admin.css"/>
+  <link rel="stylesheet" type="text/css" href="/bootstrap/css/mdb.css"/>
+
+  <script src="/js/jquery-3.4.1.min.js"></script>
+  <script src="/js/jquery.dataTables.min.js"></script>
+  <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+</body>
+<script>
+    function searchNote(){
+      var notenumber = $('#note_number').val();
+      $('#showNotesTable').DataTable({
+          "destroy" : true,
+          "processing" : true,
+          "serverSide" : true,
+          "contentType" : "application/json",
+          "ajax" : {
+              "url" : "../../controllers/notes/get_by_like_number.php",
+              "type" : "POST",
+              dataSrc : '',
+              data :  {
+                "note_number" : notenumber
+              },
+              "order": [[0, "asc"]]
+          },
+          "columns" : [ {
+              "data" : "note_number"
+          }, {
+              "data" : "note_title"
+          }, {
+           "render": function(data, type, full){
+             return '<a style="display: inline" type="button" class="btn btn-danger" href="/controllers/notes/files/' +full['note_file_name']+ '" download="' +full['note_file_name']+ '">Download</a>';
+           }
+          }]
+      });
+
+      $('#selectSerialsModal').modal('toggle');
+    }
+
+    function backOne(){
+      window.history.back();
+    }
+</script>
+</html>
